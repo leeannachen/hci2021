@@ -15,16 +15,47 @@
     </div>
     <div class="people_counter"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.1/tinycolor.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+    <!-- <script type="text/javascript" src="html2canvas-master/dist/html2canvas.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript">
+    </script>
     <script type="text/javascript">
+      //set up the frame
       canvas = document.getElementById("draw");
       canvas.width = document.body.clientWidth; //document.width is obsolete
       canvas.height = document.body.clientHeight-350; //document.height is obsolete
-      // canvasW = canvas.width;
-      // canvasH = canvas.height;
+      
+      // time = 24 hours 
+      var time = 86400;
+
+      // loads webpage + sets it to save and refr
       $(document).ready(function() {
           frames.start();
+          setInterval('screenshot_and_refresh()', time);
       });
+
+
+      function screenshot_and_refresh() {
+        // // screenshot: 
+        // html2canvas(document.body,{background: '#fff'}).then(function(canvas) {
+
+        // document.body.appendChild(canvas);
+
+        // // Get base64URL
+        // var base64URL = canvas.toDataURL('image/jpeg').replace('image/jpeg', 'image/octet-stream');
+
+        // // AJAX request
+        // $.ajax({
+        //   url: 'ajaxfile.php',
+        //   type: 'post',
+        //   data: {image: base64URL},
+        //   success: function(data){
+        //       console.log('Upload successfully');
+        //   }
+        // });
+        // });  
+        // refresh
+          location.reload();
+      }
 
       var frames = {
         socket: null,
