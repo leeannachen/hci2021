@@ -30,30 +30,11 @@
       // loads webpage + sets it to save and refr
       $(document).ready(function() {
           frames.start();
-          setInterval('screenshot_and_refresh()', time);
+          setInterval('refresh()', time);
       });
 
 
-      function screenshot_and_refresh() {
-        // // screenshot: 
-        // html2canvas(document.body,{background: '#fff'}).then(function(canvas) {
-
-        // document.body.appendChild(canvas);
-
-        // // Get base64URL
-        // var base64URL = canvas.toDataURL('image/jpeg').replace('image/jpeg', 'image/octet-stream');
-
-        // // AJAX request
-        // $.ajax({
-        //   url: 'ajaxfile.php',
-        //   type: 'post',
-        //   data: {image: base64URL},
-        //   success: function(data){
-        //       console.log('Upload successfully');
-        //   }
-        // });
-        // });  
-        // refresh
+      function refresh() {
           location.reload();
       }
 
@@ -88,11 +69,6 @@
           frames.socket = new WebSocket(url);
           frames.socket.onmessage = function(event) {
             let data = JSON.parse(event.data);
-            // clear the canvas
-            // ctx.clearRect(0, 0, c.width, c.height);
-
-            // draw the camera on the top of the screen
-            // drawEnv(ctx, origin);
 
             // draw each person as a circle
             var i = 0;
@@ -124,7 +100,6 @@
                   current_color = "#" + Math.floor(Math.random()*16777215).toString(16);
                   ctx.strokeStyle = ctx.fillStyle = current_color;
                   id_to_color[idx] = current_color;
-                  // console.log("new color");
                 }
                 // we want the data on the x,z plane from the camera's frame, so use indicies and 0 (x), 2 (Z)
                 // see: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes#arcs
