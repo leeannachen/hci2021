@@ -27,7 +27,7 @@
       // time = 24 hours 
       var time = 86400;
 
-      // loads webpage + sets it to save and refr
+      // loads webpage + sets it refresh every 24 hours
       $(document).ready(function() {
           frames.start();
           setInterval('refresh()', time);
@@ -42,9 +42,7 @@
         socket: null,
 
         start: function() {
-          // ?ip=172.29.41.16:8888
-          var ip = window.location.search;
-          ip = ip.split('ip=')[1];
+          ip = '172.28.142.145:8888'
           console.log(`connecting to ${ip}`);
           // websocket connection location
           var url = "ws://" + ip + "/frames";
