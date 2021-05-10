@@ -4,6 +4,7 @@ import schedule
 import time
 from datetime import date
 
+# from https://pyautogui.readthedocs.io/en/latest/screenshot.html
 def screenshot(t):
     screenshot = pyautogui.screenshot()
     d1 = date.today().strftime("%d%m%Y")

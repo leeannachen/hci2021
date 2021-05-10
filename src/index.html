@@ -1,3 +1,5 @@
+<!-- HCI Group 1: Brandon, Lee, Greta
+We worked off of Nathan's template code: https://github.com/yale-img/hci-html -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -28,6 +30,8 @@
       var time = 86400;
 
       // loads webpage + sets it refresh every 24 hours
+      // from https://stackoverflow.com/questions/3715047/how-to-reload-a-page-using-javascript
+     // and https://www.w3schools.com/jsref/met_win_setinterval.asp
       $(document).ready(function() {
           frames.start();
           setInterval('refresh()', time);
@@ -42,8 +46,9 @@
         socket: null,
 
         start: function() {
-          ip = '172.28.142.145:8888'
-          console.log(`connecting to ${ip}`);
+          // ?ip=172.28.142.145:8888, set in url
+          var ip = window.location.search;
+          ip = ip.split('ip=')[1];
           // websocket connection location
           var url = "ws://" + ip + "/frames";
 
@@ -73,27 +78,29 @@
 
             if (data.people) {
               var num_people = Object.keys(data.people).length;
-              //console.log(num_people);
+
+              // for each "person" detected in frame
               for (const [idx, person] of Object.entries(data.people)) {
-                // console.log(person);
                 let person_x = -1 * toCM(person.avg_position[0]) + origin[0]
                 let person_y = toCM(person.avg_position[2]) + origin[1]
-                console.log("idx = ", idx);
+
+                // if person already seen
                 if(idx in last_people_locs) {
                   
-                  console.log("entered if");
+                  // only move their coresponding dot if they have moved an amount above the threshold (to keep a clean visualization)
                   var threshold = 15;
                   var has_moved = (Math.abs(last_people_locs[idx][0] - person_x) > threshold) || (Math.abs(last_people_locs[idx][1] - person_y) > threshold);
-                  console.log(has_moved);
                   if(!has_moved) {
-                    console.log("continuing");
                     continue;
                   }
                 }
+
+                // if person already seen
                 if (idx in id_to_color){
                   ctx.strokeStyle = ctx.fillStyle = id_to_color[idx];
                 }
-                else{
+                else {
+                  // choose a random color for them
                   total_people += 1; 
                   current_color = "#" + Math.floor(Math.random()*16777215).toString(16);
                   ctx.strokeStyle = ctx.fillStyle = current_color;
@@ -106,11 +113,10 @@
                 ctx.beginPath();
                 
                 last_people_locs[idx] = [person_x, person_y]
-                console.log(last_people_locs)
                 ctx.arc(person_x, person_y, personRadiusCM, 0, 2 * Math.PI);
                 ctx.fill();
                 ctx.stroke();
-                $('.people_counter').text(`${total_people} people have passed this installation today, and ${num_people} are currently in view.`);
+                $('.people_counter').text(`${num_people} people are currently in view.`);
               }
             }
           }
