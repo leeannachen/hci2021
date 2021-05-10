@@ -8,7 +8,7 @@ from datetime import date
 def screenshot(t):
     screenshot = pyautogui.screenshot()
     d1 = date.today().strftime("%d%m%Y")
-    screenshot.save("../images/screenshot_" + d1 + ".png")
+    screenshot.save("images/"+ "screenshot_" + d1 + ".png")
     return
 
 schedule.every().day.at("00:00").do(screenshot,'It is 00:00')
